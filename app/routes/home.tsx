@@ -2,7 +2,7 @@ import type { Route } from "./+types/home";
 import Navbar from "~/components/Navbar";
 import {resumes} from "../../constants";
 import {callback} from "fdir/dist/api/async";
-import {usePuterStore} from "~/puter";
+import {usePuterStore} from "~/lib/puter";
 import {useEffect} from "react";
 import {useNavigate} from "react-router";
 import ResumeCard from "~/components/ResumeCard";
