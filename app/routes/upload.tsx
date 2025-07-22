@@ -6,9 +6,11 @@ import {usePuterStore} from "~/lib/puter";
 import {convertPdfToImage} from "~/lib/pdf2img";
 import {generateUUID} from "~/lib/utils";
 import {prepareInstructions} from "../../constants";
+import { useNavigate } from 'react-router';
 import {formatSize} from "~/lib/utils";
 
 const Upload = ()=>{
+    const navigate = useNavigate();
     const {auth,isLoading,fs,kv,ai} = usePuterStore();
     const[isProcessing, setIsProcessing] = useState(false);
     const[statusText, setStatusText] = useState('');
@@ -50,6 +52,7 @@ const Upload = ()=>{
         await kv.set(`resume ${uuid}`,JSON.stringify(data));
         setStatusText('Analysis complete, redirecting...');
         console.log(data);
+        navigate(`/resume/${uuid}`);
     }
     const handleSubmit = (e: FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
