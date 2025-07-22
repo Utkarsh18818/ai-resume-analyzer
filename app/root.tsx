@@ -33,7 +33,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const { init } = usePuterStore();
 
   useEffect(() => {
-    init()
+    if (typeof window !== 'undefined') {
+      init();
+    }
   }, [init]);
   return (
     <html lang="en">
