@@ -42,11 +42,29 @@ const Upload = ()=>{
         }
         await kv.set(`resume ${uuid}`,JSON.stringify(data));
         setStatusText('Analyzing....');
-        const feedback = await ai.feedback(
-            uploadedFile.path,
-            prepareInstructions({jobTitle,jobDescription})
-        )
-        if (!feedback) return setStatusText('Error:Failed to analyze resume');
+        let feedback;
+        try {
+            feedback = await ai.feedback(
+                uploadedFile.path,
+                prepareInstructions({jobTitle,jobDescription})
+            );
+            console.log('AI feedback response:', feedback);
+            if (!feedback) {
+                setStatusText('Error: Failed to analyze resume');
+                setIsProcessing(false);
+                return;
+            }
+        } catch (error) {
+            console.error('AI feedback error:', error);
+            console.log('Full error object:', JSON.stringify(error, null, 2));
+            if (error && typeof error === 'object' && 'error' in error && error.error.delegate === 'usage-limited-chat') {
+                setStatusText('Error: AI usage limit reached. Please try again later or upgrade your plan.');
+            } else {
+                setStatusText('Error: Failed to analyze resume');
+            }
+            setIsProcessing(false);
+            return;
+        }
         const feedbackText = typeof feedback.message.content === 'string'?feedback.message.content: feedback.message.content[0].text;
         data.feedback = JSON.parse(feedbackText);
         await kv.set(`resume ${uuid}`,JSON.stringify(data));
