@@ -92,7 +92,7 @@ const Upload = ()=>{
                                 <input type="text" name="job-title" id="job-title" placeholder="job-title"/>
                             </div>
                             <div className="form-div">
-                                <label htmlFor="job-description">job-title</label>
+                                <label htmlFor="job-description">job-Description</label>
                                 <textarea rows={5} name="job-description" id="job-description" placeholder="job-description"/>
                             </div>
                             <div className="form-div">

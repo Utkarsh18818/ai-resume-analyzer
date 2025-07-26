@@ -1,3 +1,9 @@
+import {type ClassValue, clsx } from "clsx";
+import {twMerge} from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]){
+    return twMerge(clsx(inputs));
+}
 import * as crypto from "node:crypto";
 /**
 * @param bytes
@@ -25,3 +31,4 @@ export const generateUUID = () => {
         return v.toString(16);
     });
 };
+
